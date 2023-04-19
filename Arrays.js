@@ -17,9 +17,9 @@
 // console.log(arr);
 
 // str="Mangesh"
-str="Mangesh"
-temp=''
-for(j=str.length-1;j>=0;j--)
+// str="Mangesh"
+// temp=''
+// for(j=str.length-1;j>=0;j--)
 {
    temp+=str.charAt(j)
 }
