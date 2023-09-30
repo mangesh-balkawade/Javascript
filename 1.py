@@ -1,37 +1,266 @@
-# # def add(no1,no2):
-# #     return no1,no2
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
-# # i1,i2=add(1,2)
+# Define the two lists of countries
+list2 = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "AntiguaAndBarbuda",
+    "Argentina",
+    "Armenia",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "TheBahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bhutan",
+    "Bolivia",
+    "BosniaandHerzegovina",
+    "Botswana",
+    "Brazil",
+    "Brunei",
+    "Bulgaria",
+    "BurkinaFaso",
+    "Burundi",
+    "Cambodia",
+    "Cameroon",
+    "Canada",
+    "CapeVerde",
+    "CentralAfricanRepublic",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia",
+    "Comoros",
+    "Congo",
+    "DemocraticRepublicoftheCongo",
+    "CostaRica",
+    "CoteDIvoireIvoryCoast",
+    "Croatia",
+    "Cuba",
+    "Cyprus",
+    "CzechRepublic",
+    "Denmark",
+    "Djibouti",
+    "Dominica",
+    "DominicanRepublic",
+    "EastTimor",
+    "Ecuador",
+    "Egypt",
+    "ElSalvador",
+    "EquatorialGuinea",
+    "Eritrea",
+    "Estonia",
+    "Ethiopia",
+    "FijiIslands",
+    "Finland",
+    "France",
+    "Gabon",
+    "TheGambia",
+    "Georgia",
+    "Germany",
+    "Ghana",
+    "Greece",
+    "Grenada",
+    "Guatemala",
+    "Guinea",
+    "GuineaBissau",
+    "Guyana",
+    "Haiti",
+    "Honduras",
+    "Hungary",
+    "Iceland",
+    "India",
+    "Indonesia",
+    "Iran",
+    "Iraq",
+    "Ireland",
+    "Israel",
+    "Italy",
+    "Jamaica",
+    "Japan",
+    "Jordan",
+    "Kazakhstan",
+    "Kenya",
+    "Kiribati",
+    "NorthKorea",
+    "SouthKorea",
+    "Kuwait",
+    "Kyrgyzstan",
+    "Laos",
+    "Latvia",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Macedonia",
+    "Madagascar",
+    "Malawi",
+    "Malaysia",
+    "Maldives",
+    "Mali",
+    "Malta",
+    "Mauritania",
+    "Mauritius",
+    "Mexico",
+    "Micronesia",
+    "Moldova",
+    "Mongolia",
+    "Montenegro",
+    "Morocco",
+    "Mozambique",
+    "Myanmar",
+    "Namibia",
+    "Nauru",
+    "Nepal",
+    "Netherlands",
+    "NewZealand",
+    "Nicaragua",
+    "Niger",
+    "Nigeria",
+    "Norway",
+    "Oman",
+    "Pakistan",
+    "Palau",
+    "Panama",
+    "PapuanewGuinea",
+    "Paraguay",
+    "Peru",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Qatar",
+    "Romania",
+    "Russia",
+    "Rwanda",
+    "SaintKittsAndNevis",
+    "SaintLucia",
+    "SaintVincentAndTheGrenadines",
+    "Samoa",
+    "SanMarino",
+    "SaoTomeandPrincipe",
+    "SaudiArabia",
+    "Senegal",
+    "Serbia",
+    "Seychelles",
+    "SierraLeone",
+    "Singapore",
+    "Slovakia",
+    "Slovenia",
+    "SolomonIslands",
+    "Somalia",
+    "SouthAfrica",
+    "SouthSudan",
+    "Spain",
+    "SriLanka",
+    "Sudan",
+    "Suriname",
+    "Swaziland",
+    "Sweden",
+    "Switzerland",
+    "Syria",
+    "Taiwan",
+    "Tajikistan",
+    "Tanzania",
+    "Thailand",
+    "Togo",
+    "Tonga",
+    "TrinidadAndTobago",
+    "Tunisia",
+    "Turkey",
+    "Turkmenistan",
+    "Tuvalu",
+    "Uganda",
+    "Ukraine",
+    "UnitedArabEmirates",
+    "UnitedKingdom",
+    "UnitedStates",
+    "Uruguay",
+    "Uzbekistan",
+    "Vanuatu",
+    "Venezuela",
+    "Vietnam",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe"
 
-# # for i in range(0,10):
-# #     print(i)
+]
 
-# # if(1==1):
-# #     print(1)
-# # elif(2==2):
-# #     print(1)
-# # else:
-# #     print(2)
+list1 = [
+    'America',
+    'Aruba',
+    'Bahamas',
+    'Beliz',
+    'Bermuda',
+    'Bosnia and Herzegovina',
+    'Britain (United Kingdom)',
+    'Brunei Darussalam',
+    'Cayman Islands',
+    'Costa Rica',
+    'Czech Republic',
+    'Dominican Republic',
+    'East Caribbean',
+    'El Salvador',
+    'England (United Kingdom)',
+    'Euro',
+    'Falkland Islands',
+    'Fiji',
+    'Gibraltar',
+    'Guernsey',
+    'Holland (Netherlands)',
+    'Hong Kong',
+    'Isle of Man',
+    'Jersey',
+    'Korea (North)',
+    'Korea (South)',
+    'Netherlands Antilles',
+    'New Zealand',
+    'North Korea',
+    'Saint Helena',
+    'Saudi Arabia',
+    'Solomon Islands',
+    'South Africa',
+    'South Korea',
+    'Sri Lanka',
+    'Trinidad and Tobago',
+    'United Kingdom',
+    'United States of America',
+    'Vatican City'
+]
 
-# # arr=[1,2,3,4]
+# Create a dictionary to store the mapping between the two lists
+mapping = {}
 
-# def occ(str1):
-#     arr = list(str1)
-#     print(arr[::-1])
-#     map = dict()
-#     for i in arr:
-#         if i in map.keys():
-#             map[i] = map.get(i)+1
-#         else:
-#             map[i] = 1
-#     print(map)
+# Loop through each country in the first list and find the closest match in the second list
+for country1 in list1:
+    # Use fuzzywuzzy's process.extractOne to find the closest match
+    match, score = process.extractOne(country1, list2)
 
+    # You can adjust the score threshold as needed
+    if score >= 80:
+        mapping[country1] = match
 
-# str1 = "Maangesh"
-# occ(str1)
-list1 = [1, 2, 3,1, 2, 3, 4,5,6]
-for i in range(0,len(list1)):
-    for j in range(i+1,len(list1)):
-        if(list1[i]==list1[j]):
-            list1.remove(list1[j])
-print(list1)
+# Print the mapping between the two lists
+arr = []
+for country1, country2 in mapping.items():
+    arr.append({country1: country2})
+    
+js_array = []
+
+for item in arr:
+    for key, value in item.items():
+        js_array.append({key: value})
+
+print(js_array)
